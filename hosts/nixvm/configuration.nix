@@ -124,7 +124,7 @@
 
   users.users.fezirix = {
     isNormalUser = true;
-    description = "dupe user";
+    description = "fezirix";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
@@ -140,7 +140,7 @@
   programs.firefox.enable = true;
 
   # Install zsh systemwide
-  programs.zsh.enable = true;
+#   programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

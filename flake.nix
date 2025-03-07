@@ -23,7 +23,7 @@
         ./programs/zsh/zsh-as-default-shell.nix
         {
           _module.args = {
-            usernameList = [ "starkipraggy" ];
+            usernameList = [ "starkipraggy" "fezirix" ];
           };
         }
       ];
