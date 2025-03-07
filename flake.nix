@@ -9,7 +9,7 @@
 
   outputs = { nixpkgs, home-manager, ... } @ inputs:
   let
-    gitDetails = {
+    gitdetails = {
       userName = "starkipraggy";
       userEmail = "starkipraggy@hotmail.com";
     };
@@ -20,7 +20,7 @@
   {
     nixosConfigurations.nixvm = nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit gitDetails;
+        inherit gitdetails;
         inherit usernameList;
       };
       modules = [
@@ -29,8 +29,13 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit gitdetails; };
 
-          home-manager.users = nixpkgs.lib.genAttrs usernameList (name: import ./users/${name}.nix);
+          home-manager.users = nixpkgs.lib.genAttrs usernameList (name: import ./users/userTemplate.nix {
+            inherit gitdetails;
+            pkgs = nixpkgs.pkgs;
+            username = name;
+          });
         }
         ./programs/zsh/zsh-as-default-shell.nix
       ];

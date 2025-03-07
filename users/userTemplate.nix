@@ -1,4 +1,4 @@
-{ config, pkgs, username, gitDetails, ... }:
+{ pkgs, username, gitdetails, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -75,7 +75,7 @@
 
   programs.git = {
     enable = true;
-  } // gitDetails;
+  } // gitdetails;
 
   programs.zsh = {
     # enabled through systemwide config
