@@ -122,6 +122,16 @@
     ];
   };
 
+  users.users.fezirix = {
+    isNormalUser = true;
+    description = "dupe user";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      kdePackages.kate
+    #  thunderbird
+    ];
+  };
+
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "starkipraggy";
