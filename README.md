@@ -7,6 +7,10 @@ Create a NixOS config that is
  - Reproducible
  - Modular
  - Doesn't get in the way
+   - One command to build.
+     - Home Manager as nixOS module
+   - Configuration files that see high churn to be symlinked into Nix
+     - Reduce building which is time-consuming. Let Git do its job
 
 ## Roadmap
 
@@ -17,5 +21,5 @@ Create a NixOS config that is
    - [ ] VM
    - [ ] Surface Pro 9 (Intel)
  - [ ] Secret Management
- - [ ] Link dotfiles as a git submodule
- - [ ] Link dotfiles without it being managed by Home Manager. git can take care of the rollback  
+ - [ ] Link high churn dotfiles without it being managed by Home Manager
+   - [ ]  vim/neovim config (pick one)
