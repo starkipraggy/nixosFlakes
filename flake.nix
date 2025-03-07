@@ -18,10 +18,13 @@
           home-manager.useUserPackages = true;
 
           home-manager.users.starkipraggy = import ./users/starkipraggy.nix;
+          home-manager.users.fezirix = import ./users/fezirix.nix;
         }
-        ./programs/zsh/zsh-default-shell.nix
+        ./programs/zsh/zsh-as-default-shell.nix
         {
-          username = "starkipraggy";
+          _module.args = {
+            usernameList = [ "starkipraggy" ];
+          };
         }
       ];
     };

@@ -115,7 +115,7 @@
     description = "starkipraggy";
     extraGroups = [ "networkmanager" "wheel" ];
     # has to be set here because needs root permissions
-    shell = pkgs.zsh;
+#     shell = pkgs.zsh;
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
