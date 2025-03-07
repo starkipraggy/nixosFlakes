@@ -10,15 +10,18 @@
   outputs = { nixpkgs, home-manager, ... } @ inputs:
   let
     gitDetails = {
-      username = "starkipraggy";
-      email = "starkipraggy@hotmail.com";
+      userName = "starkipraggy";
+      userEmail = "starkipraggy@hotmail.com";
     };
+
+    defaultUser = "fezirix";
+    usernameList = [ "starkipraggy" defaultUser ];
   in
   {
     nixosConfigurations.nixvm = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit gitDetails;
-        usernameList = [ "starkipraggy" "fezirix" ];
+        inherit usernameList;
       };
       modules = [
         ./hosts/nixvm/configuration.nix
@@ -27,8 +30,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 
-          home-manager.users.starkipraggy = import ./users/starkipraggy.nix;
-          home-manager.users.fezirix = import ./users/fezirix.nix;
+          home-manager.users = nixpkgs.lib.genAttrs usernameList (name: import ./users/${name}.nix);
         }
         ./programs/zsh/zsh-as-default-shell.nix
       ];
