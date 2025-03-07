@@ -35,6 +35,7 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     neovim
+    telegram-desktop
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -74,8 +75,27 @@
 
   programs.git = {
     enable = true;
-    userName = "Wilson Choo";
+    userName = "starkipraggy";
     userEmail = "starkipraggy@hotmail.com";
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    shellAliases = {
+      ll = "ls -l";
+      nixSwitch = "sudo nixos-rebuild switch --flake ~/nixos";
+    };
+    history.size = 10000;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
 
   # Let Home Manager install and manage itself.
