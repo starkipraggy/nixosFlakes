@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, usernameList, ... }:
 
 {
   imports =
@@ -110,27 +110,15 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.starkipraggy = {
+  users.users = lib.genAttrs usernameList (name: {
     isNormalUser = true;
-    description = "starkipraggy";
-    extraGroups = [ "networkmanager" "wheel" ];
-    # has to be set here because needs root permissions
-#     shell = pkgs.zsh;
-    packages = with pkgs; [
-      kdePackages.kate
-    #  thunderbird
-    ];
-  };
-
-  users.users.fezirix = {
-    isNormalUser = true;
-    description = "fezirix";
+    description = name;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
     ];
-  };
+  } );
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;

@@ -8,8 +8,18 @@
   };
 
   outputs = { nixpkgs, home-manager, ... } @ inputs:
+  let
+    gitDetails = {
+      username = "starkipraggy";
+      email = "starkipraggy@hotmail.com";
+    };
+  in
   {
     nixosConfigurations.nixvm = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit gitDetails;
+        usernameList = [ "starkipraggy" "fezirix" ];
+      };
       modules = [
         ./hosts/nixvm/configuration.nix
         home-manager.nixosModules.home-manager
@@ -21,11 +31,6 @@
           home-manager.users.fezirix = import ./users/fezirix.nix;
         }
         ./programs/zsh/zsh-as-default-shell.nix
-        {
-          _module.args = {
-            usernameList = [ "starkipraggy" "fezirix" ];
-          };
-        }
       ];
     };
     nixosConfigurations.fezirix = nixpkgs.lib.nixosSystem {
