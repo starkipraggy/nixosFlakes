@@ -15,7 +15,7 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixvm"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   virtualisation.vmware.guest.enable = true;
 
@@ -108,9 +108,9 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.fezirix = {
+  users.users.starkipraggy = {
     isNormalUser = true;
-    description = "fezirix";
+    description = "starkipraggy";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
@@ -120,7 +120,7 @@
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "fezirix";
+  services.displayManager.autoLogin.user = "starkipraggy";
 
   # Install firefox.
   programs.firefox.enable = true;

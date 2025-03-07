@@ -9,15 +9,15 @@
 
   outputs = { nixpkgs, home-manager, ... } @ inputs:
   {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixvm = nixpkgs.lib.nixosSystem {
       modules = [
-        ./configuration.nix
+        ./hosts/nixvm/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
 
-          home-manager.users.fezirix = import ./home.nix;
+          home-manager.users.starkipraggy = import ./users/starkipraggy.nix;
         }
       ];
     };
