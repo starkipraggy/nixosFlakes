@@ -114,6 +114,8 @@
     isNormalUser = true;
     description = "starkipraggy";
     extraGroups = [ "networkmanager" "wheel" ];
+    # has to be set here because needs root permissions
+    shell = pkgs.zsh;
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
@@ -126,6 +128,9 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Install zsh systemwide
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

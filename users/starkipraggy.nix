@@ -80,7 +80,8 @@
   };
 
   programs.zsh = {
-    enable = true;
+    # enabled through systemwide config
+    # enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
