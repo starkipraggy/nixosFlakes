@@ -19,6 +19,10 @@
 
           home-manager.users.starkipraggy = import ./users/starkipraggy.nix;
         }
+        ./programs/zsh/zsh-default-shell.nix
+        {
+          username = "starkipraggy";
+        }
       ];
     };
     nixosConfigurations.fezirix = nixpkgs.lib.nixosSystem {
