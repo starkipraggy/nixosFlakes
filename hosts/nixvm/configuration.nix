@@ -75,6 +75,8 @@
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
+
+    # TODO: try to configure wireplumber to prevent audio stuttering issues, but it doesn't work
     wireplumber.extraConfig = {
       "log-level-debug" = {
         "context.properties" = {
