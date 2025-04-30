@@ -5,9 +5,15 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+
+      # Optional but recommended to limit the size of your system closure.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... } @ inputs:
+  outputs = { nixpkgs, home-manager, lanzaboote, ... } @ inputs:
   let
     gitdetails = {
       userName = "starkipraggy";
@@ -18,32 +24,60 @@
     usernameList = [ "starkipraggy" defaultUser ];
   in
   {
-    nixosConfigurations.nixvm = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit gitdetails;
-        inherit usernameList;
-      };
-      modules = [
-        ./hosts/nixvm/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit gitdetails; };
+    nixosConfigurations = {
+      nixvm = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit gitdetails;
+          inherit usernameList;
+        };
+        modules = [
+          ./hosts/nixvm/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit gitdetails; };
 
-          home-manager.users = nixpkgs.lib.genAttrs usernameList (name: import ./users/userTemplate.nix {
-            inherit gitdetails;
-            pkgs = nixpkgs.pkgs;
-            username = name;
-          });
-        }
-        ./programs/zsh/zsh-as-default-shell.nix
-      ];
-    };
-    nixosConfigurations.fezirix = nixpkgs.lib.nixosSystem {
-      modules = [
-        ./configuration.nix
-      ];
+            home-manager.users = nixpkgs.lib.genAttrs usernameList (name: import ./users/userTemplate.nix {
+              inherit gitdetails;
+              pkgs = nixpkgs.pkgs;
+              username = name;
+            });
+          }
+          ./programs/zsh/zsh-as-default-shell.nix
+        ];
+      };
+      nixos = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./hosts/surfacepro/configuration.nix
+
+          lanzaboote.nixosModules.lanzaboote
+          ({ pkgs, lib, ... }: {
+
+              environment.systemPackages = [
+                # For debugging and troubleshooting Secure Boot.
+                pkgs.sbctl
+              ];
+
+              # Lanzaboote currently replaces the systemd-boot module.
+              # This setting is usually set to true in configuration.nix
+              # generated at installation time. So we force it to false
+              # for now.
+              boot.loader.systemd-boot.enable = lib.mkForce false;
+
+              boot.lanzaboote = {
+                enable = true;
+                pkiBundle = "/var/lib/sbctl";
+              };
+          })
+        ];
+      };
+
+      fezirix = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./configuration.nix
+        ];
+      };
     };
   };
 }
