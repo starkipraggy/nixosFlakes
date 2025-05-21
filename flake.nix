@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote = {
@@ -13,7 +14,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, lanzaboote, ... } @ inputs:
+  outputs = { nixpkgs, home-manager, lanzaboote, nixos-hardware, ... } @ inputs:
   let
     gitdetails = {
       userName = "starkipraggy";
@@ -50,6 +51,7 @@
       nixos = nixpkgs.lib.nixosSystem {
         modules = [
           ./hosts/surfacepro/configuration.nix
+          nixos-hardware.nixosModules.microsoft-surface-pro-9
 
           lanzaboote.nixosModules.lanzaboote
           ({ pkgs, lib, ... }: {
@@ -67,7 +69,8 @@
 
               boot.lanzaboote = {
                 enable = true;
-                pkiBundle = "/var/lib/sbctl";
+                              pkiBundle = "/var/lib/sbctl";
+                #pkiBundle = "/etc/secureboot";
               };
           })
         ];

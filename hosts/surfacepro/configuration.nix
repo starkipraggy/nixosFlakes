@@ -7,7 +7,6 @@
 {
   imports =
     [
-      <nixos-hardware/microsoft/surface-pro/9>
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
